@@ -1,0 +1,5 @@
+{
+  "name": "BaZi Flow Simulator",
+  "description": "A visual BaZi energy analysis tool with real-time Five Elements simulation and AI-powered pattern interpretation.",
+  "requestFramePermissions": []
+}
