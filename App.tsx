@@ -2,11 +2,9 @@ import React, { useState, useEffect } from "react";
 import { BaZiInput } from "./components/BaZiInput";
 import { Visualizer } from "./components/Visualizer";
 import { ElementSelector } from "./components/ElementSelector";
-import { AnalysisPanel } from "./components/AnalysisPanel";
 import { CaseSelector } from "./components/CaseSelector";
 import { BaZiState, FiveElement, AIAnalysisResult } from "./types";
 import { getRandomBaZi } from "./baziLogic";
-import { analyzeBaZi } from "./services/geminiService";
 
 const App: React.FC = () => {
   const [bazi, setBazi] = useState<BaZiState>(getRandomBaZi());
@@ -21,18 +19,6 @@ const App: React.FC = () => {
     setAnalysis(null);
     setSimulatedElement(null);
   }, [bazi.year.stem, bazi.month.stem, bazi.day.stem, bazi.hour.stem]);
-
-  const handleAnalyze = async (customPrompt: string) => {
-    setLoading(true);
-    try {
-      const result = await analyzeBaZi(customPrompt);
-      setAnalysis(result);
-    } catch (e) {
-      console.error(e);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   const handleCaseSelect = (newBazi: BaZiState) => {
     setBazi(newBazi);
@@ -88,16 +74,6 @@ const App: React.FC = () => {
           <ElementSelector
             selectedElement={simulatedElement}
             onSelect={setSimulatedElement}
-          />
-        </section>
-
-        {/* Bottom Section: AI Analysis */}
-        <section>
-          <AnalysisPanel
-            bazi={bazi}
-            analysis={analysis}
-            loading={loading}
-            onAnalyze={handleAnalyze}
           />
         </section>
       </main>
